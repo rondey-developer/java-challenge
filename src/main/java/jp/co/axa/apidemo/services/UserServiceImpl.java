@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         LoginInformation loginInformation = loginInformationRepository.findByUsername(username);
         if(loginInformation == null){
-            //TODO(404)
+            throw new UsernameNotFoundException(username);
         }
         return new User(loginInformation.getUsername(), loginInformation.getPassword(), Collections.emptyList());
     }

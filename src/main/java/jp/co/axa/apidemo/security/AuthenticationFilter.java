@@ -8,6 +8,7 @@ import jp.co.axa.apidemo.entities.LoginInformation;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -42,12 +43,17 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication auth){
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication auth){
         Instant expireTime = Instant.now().plus(1, ChronoUnit.HOURS);
         Date exp = Date.from(expireTime);
         Key key = Keys.hmacShaKeyFor(SecurityConstants.KEY.getBytes());
         Claims claims = Jwts.claims().setSubject(((User) auth.getPrincipal()).getUsername());
         String token = Jwts.builder().setClaims(claims).signWith(key).setExpiration(exp).compact();
-        res.addHeader("token", token);
+        response.addHeader("token", token);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Username or Password");
     }
 }
