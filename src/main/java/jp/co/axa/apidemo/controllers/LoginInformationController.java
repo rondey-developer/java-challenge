@@ -1,5 +1,6 @@
 package jp.co.axa.apidemo.controllers;
 
+import jp.co.axa.apidemo.Exception.UserExistException;
 import jp.co.axa.apidemo.entities.LoginInformation;
 import jp.co.axa.apidemo.repositories.LoginInformationRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +23,18 @@ public class LoginInformationController {
 
     @PostMapping("/register")
     public void signUp(@RequestBody LoginInformation user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        loginInformationRepository.save(user);
+        if(user != null) {
+            String username = user.getUsername();
+            if(!userExist(username)) {
+                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                loginInformationRepository.save(user);
+            }
+            else throw new UserExistException();
+        }
+    }
+
+    private Boolean userExist(String username){
+        LoginInformation registeredUser = loginInformationRepository.findByUsername(username);
+        return registeredUser != null;
     }
 }
