@@ -29,7 +29,11 @@ public class EmployeeController {
 
     @GetMapping("/employees/{employeeId}")
     public Employee getEmployee(@PathVariable(name="employeeId")Long employeeId) {
-        return employeeService.getEmployee(employeeId);
+        try {
+            return employeeService.getEmployee(employeeId);
+        }catch (Exception e){
+            throw new EmployeeNotExistException();
+        }
     }
 
     @PostMapping("/employees")
@@ -44,13 +48,17 @@ public class EmployeeController {
         logger.info("Employee Deleted Successfully");
     }
 
+
     @PutMapping("/employees/{employeeId}")
     public void updateEmployee(@RequestBody Employee employee,
                                @PathVariable(name="employeeId")Long employeeId){
-        Employee emp = employeeService.getEmployee(employeeId);
-        if(emp != null){
-            employeeService.updateEmployee(employee);
-            logger.info("Employee updated Successfully");
-        }else throw new EmployeeNotExistException();
+        try{
+            Employee emp = employeeService.getEmployee(employeeId);
+            if(emp != null) {
+                logger.info("Employee updated Successfully");
+            }
+        }catch(Exception e){
+                throw new EmployeeNotExistException();
+        }
     }
 }
