@@ -26,9 +26,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     public AuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
-        setFilterProcessesUrl("/api/v1/login");
+        setFilterProcessesUrl(SecurityConstants.LOGIN_URL);
     }
 
+    //Try to search for existing user and do authentication
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) {
         try {
@@ -42,6 +43,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         }
     }
 
+    //successful login and generating JWT token
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication auth){
         Instant expireTime = Instant.now().plus(1, ChronoUnit.HOURS);
@@ -52,6 +54,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         response.addHeader("token", token);
     }
 
+    //Handle Login Error
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Username or Password");

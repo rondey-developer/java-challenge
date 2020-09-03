@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AuthorizationFilter extends BasicAuthenticationFilter {
+
     public AuthorizationFilter(AuthenticationManager authManager) {
         super(authManager);
     }
@@ -43,8 +44,9 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
                     .setSigningKey(Keys.hmacShaKeyFor(SecurityConstants.KEY.getBytes()))
                     .build()
                     .parseClaimsJws(tokenClearUp);
-            if (user != null)
+            if (user != null) {
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+            }
             else return null;
         }
         return null;

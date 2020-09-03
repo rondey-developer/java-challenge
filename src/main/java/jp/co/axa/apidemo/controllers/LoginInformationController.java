@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.logging.Logger;
+
 @RestController
 @RequestMapping("/api/v1")
 public class LoginInformationController {
     private LoginInformationRepository loginInformationRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 
     public LoginInformationController(LoginInformationRepository loginInformationRepository,
                           BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -28,8 +31,12 @@ public class LoginInformationController {
             if(!userExist(username)) {
                 user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 loginInformationRepository.save(user);
+                logger.info("user registered successfully");
             }
-            else throw new UserExistException();
+            else {
+                logger.info("user registered unsuccessfully ");
+                throw new UserExistException();
+            }
         }
     }
 
