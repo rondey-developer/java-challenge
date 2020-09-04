@@ -23,8 +23,7 @@ public class EmployeeController {
 
     @GetMapping("/employees")
     public List<Employee> getEmployees() {
-        List<Employee> employees = employeeService.retrieveEmployees();
-        return employees;
+        return employeeService.retrieveEmployees();
     }
 
     @GetMapping("/employees/{employeeId}")
@@ -48,17 +47,13 @@ public class EmployeeController {
         logger.info("Employee Deleted Successfully");
     }
 
-
     @PutMapping("/employees/{employeeId}")
     public void updateEmployee(@RequestBody Employee employee,
                                @PathVariable(name="employeeId")Long employeeId){
-        try{
-            Employee emp = employeeService.getEmployee(employeeId);
-            if(emp != null) {
-                logger.info("Employee updated Successfully");
-            }
-        }catch(Exception e){
-                throw new EmployeeNotExistException();
-        }
+        Employee emp = employeeService.getEmployee(employeeId);
+        if(emp != null) {
+            employeeService.updateEmployee(employeeId, employee);
+            logger.info("Employee updated Successfully");
+        }else throw new EmployeeNotExistException();
     }
 }

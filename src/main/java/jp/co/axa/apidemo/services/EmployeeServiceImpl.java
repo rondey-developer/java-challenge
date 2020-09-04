@@ -1,5 +1,6 @@
 package jp.co.axa.apidemo.services;
 
+import jp.co.axa.apidemo.Exception.EmployeeNotExistException;
 import jp.co.axa.apidemo.entities.Employee;
 import jp.co.axa.apidemo.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     public Employee getEmployee(Long employeeId) {
         Optional<Employee> optEmp = employeeRepository.findById(employeeId);
-        return optEmp.get();
+        if (optEmp.isPresent()) return optEmp.get();
+        else throw new EmployeeNotExistException();
     }
 
     public void saveEmployee(Employee employee){
@@ -36,7 +38,8 @@ public class EmployeeServiceImpl implements EmployeeService{
         employeeRepository.deleteById(employeeId);
     }
 
-    public void updateEmployee(Employee employee) {
+    public void updateEmployee(Long employeeId, Employee employee) {
+        employee.setId(employeeId);
         employeeRepository.save(employee);
     }
 }
