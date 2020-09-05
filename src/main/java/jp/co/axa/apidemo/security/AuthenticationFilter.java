@@ -46,17 +46,21 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     //successful login and generating JWT token
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication auth){
-        Instant expireTime = Instant.now().plus(1, ChronoUnit.HOURS);
-        Date exp = Date.from(expireTime);
-        Key key = Keys.hmacShaKeyFor(SecurityConstants.KEY.getBytes());
-        Claims claims = Jwts.claims().setSubject(((User) auth.getPrincipal()).getUsername());
-        String token = Jwts.builder().setClaims(claims).signWith(key).setExpiration(exp).compact();
-        response.addHeader("token", token);
+        String token = jwtGenerator(auth);
+        response.addHeader(SecurityConstants.HEADER_NAME, token);
     }
 
     //Handle Login Error
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Username or Password");
+    }
+
+    public String jwtGenerator(Authentication auth){
+        Instant expireTime = Instant.now().plus(1, ChronoUnit.HOURS);
+        Date exp = Date.from(expireTime);
+        Key key = Keys.hmacShaKeyFor(SecurityConstants.KEY.getBytes());
+        Claims claims = Jwts.claims().setSubject(((User) auth.getPrincipal()).getUsername());
+        return Jwts.builder().setClaims(claims).signWith(key).setExpiration(exp).compact();
     }
 }
