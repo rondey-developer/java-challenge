@@ -1,44 +1,58 @@
-### How to use this spring-boot project
+### Things that i have done.
+1. Fix bug
+- cannot update employee
+- employee will become null after adding
 
-- Install packages with `mvn package`
-- Run `mvn spring-boot:run` for starting the application (or use your IDE)
+2. Implement Authentication System
+- JWT token
+- login and register api
+- Swagger with authentication
 
-Application (with the embedded H2 database) is ready to be used ! You can access the url below for testing it :
+3. Logger
+- replace sout to logger
 
-- Swagger UI : http://localhost:8080/swagger-ui.html
-- H2 UI : http://localhost:8080/h2-console
+4. Add test case
+- Repositiory test
+  - Employee
+  - Login information
+- Controller test
+  - Employee CRUD process
+  - Login and authentication process
+- Intergration test
+  - Stimulation on getting all employee information after login.
+  
+  
+### Difficulties:
+#### Limit time
+- Problem: 
+  - limited time of work
+- How i tackle this problem:
+  1. Planning
+  2. Avoid over-programming
+  - Not to implement authorities while working on authenication
+  
+### Planning and Execution:
+- https://github.com/rondey-developer/java-challenge/projects/1
+- Try to list out all then work that i should be done in 3 days
+- Prioritize it
+- Management this project in. scrum style.
 
-> Don't forget to set the `JDBC URL` value as `jdbc:h2:mem:testdb` for H2 UI.
-
+### If I have more time:
+- Implement database caching
+- Implement authorities while authentication
+- Implement JWT token renewal mechanism
+- Implement JWT validation service
+- Implement mass update and mass create of employee
 
 
 ### Instructions
-
-- download the zip file of this project
-- create a repository in your own github named 'java-challenge'
-- clone your repository in a folder on your machine
-- extract the zip file in this folder
-- commit and push
-
-- Enhance the code in any ways you can see, you are free! Some possibilities:
-  - Add tests
-  - Change syntax
-  - Protect controller end points
-  - Add caching logic for database calls
-  - Improve doc and comments
-  - Fix any bug you might find
-- Edit readme.md and add any comments. It can be about what you did, what you would have done if you had more time, etc.
-- Send us the link of your repository.
-
-#### Restrictions
-- use java 8
-
-
-#### What we will look for
-- Readability of your code
-- Documentation
-- Comments in your code 
-- Appropriate usage of spring boot
-- Appropriate usage of packages
-- Is the application running as expected
-- No performance issues
+1. Since authentication system is introduced. Please do following step in order to authenticate
+- Registration
+  - make a post request to /api/v1/register with { username: $your_input, password: $your_input }
+- Login
+  - make a post request to /api/v1/login with { username: $your_input, password: $your_input } you just registered
+  - get the token response from the server in header in order to authenticate afterward
+  
+- Authenticate
+  - Add the token with Authorization: Bearer: $your_token in header of you request.
+  - can only access all the api for employee with token
