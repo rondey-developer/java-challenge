@@ -56,3 +56,7 @@
 - Authenticate
   - Add the token with Authorization: Bearer: $your_token in header of you request.
   - can only access all the api for employee with token
+  
+  
+  ### After words
+  I ensured that both of RondeyChengTszkan and rondey-developer are the same person. Reason for two account is because there two git account in my pc. 
