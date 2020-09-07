@@ -34,6 +34,7 @@
 ### Planning and Execution:
 - https://github.com/rondey-developer/java-challenge/projects/1
 - Try to list out all then work that i should be done in 3 days
+- Tag with Story, Bug and Test
 - Prioritize it
 - Management this project in. scrum style.
 
