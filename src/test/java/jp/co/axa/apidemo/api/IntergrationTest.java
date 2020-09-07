@@ -1,17 +1,15 @@
 package jp.co.axa.apidemo.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jp.co.axa.apidemo.entities.Employee;
 import jp.co.axa.apidemo.entities.LoginInformation;
 import jp.co.axa.apidemo.repositories.LoginInformationRepository;
 import jp.co.axa.apidemo.security.SecurityConstants;
 import jp.co.axa.apidemo.services.EmployeeService;
-import jp.co.axa.apidemo.services.UserServiceImpl;
+import jp.co.axa.apidemo.services.LoginInformationServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -50,10 +48,7 @@ public class IntergrationTest {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @MockBean
-    private LoginInformationRepository loginInformationRepository;
-
-    @MockBean
-    private UserServiceImpl service;
+    private LoginInformationServiceImpl service;
 
     @MockBean
     private EmployeeService employeeService;

@@ -1,7 +1,6 @@
 package jp.co.axa.apidemo.security;
 
-import com.google.common.base.Predicates;
-import jp.co.axa.apidemo.services.UserServiceImpl;
+import jp.co.axa.apidemo.services.LoginInformationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +20,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserServiceImpl userDetailsService;
+    private LoginInformationServiceImpl userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

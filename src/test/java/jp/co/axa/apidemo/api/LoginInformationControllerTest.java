@@ -5,7 +5,7 @@ import jp.co.axa.apidemo.entities.LoginInformation;
 import jp.co.axa.apidemo.repositories.LoginInformationRepository;
 import jp.co.axa.apidemo.security.AuthenticationFilter;
 import jp.co.axa.apidemo.security.SecurityConstants;
-import jp.co.axa.apidemo.services.UserServiceImpl;
+import jp.co.axa.apidemo.services.LoginInformationServiceImpl;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -51,7 +51,7 @@ public class LoginInformationControllerTest {
     private LoginInformationRepository loginInformationRepository;
 
     @MockBean
-    private UserServiceImpl service;
+    private LoginInformationServiceImpl service;
 
     @Mock
     private AuthenticationManager authenticationManager;

@@ -1,6 +1,6 @@
 package jp.co.axa.apidemo.controllers;
 
-import jp.co.axa.apidemo.Exception.UserExistException;
+import jp.co.axa.apidemo.Exception.LoginInformationExistException;
 import jp.co.axa.apidemo.entities.LoginInformation;
 import jp.co.axa.apidemo.repositories.LoginInformationRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,7 +35,7 @@ public class LoginInformationController {
             }
             else {
                 logger.info("user registered unsuccessfully ");
-                throw new UserExistException();
+                throw new LoginInformationExistException();
             }
         }
     }
