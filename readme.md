@@ -46,7 +46,7 @@
 
 
 ### Instructions
-1. Since authentication system is introduced. Please do following step in order to authenticate
+Since authentication system is introduced. Please do following step in order to authenticate
 - Registration
   - make a post request to /api/v1/register with { username: $your_input, password: $your_input }
 - Login
